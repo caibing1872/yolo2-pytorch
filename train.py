@@ -117,9 +117,11 @@ for step in range(start_epoch * imdb.batch_per_epoch, cfg.max_epoch * imdb.batch
             lr *= cfg.lr_decay
             optimizer = torch.optim.SGD(net.parameters(), lr=lr, momentum=cfg.momentum, weight_decay=cfg.weight_decay)
 
-        save_name = os.path.join(cfg.train_output_dir, '{}_{}.h5'.format(cfg.exp_name, imdb.epoch))
-        net_utils.save_net(save_name, net)
-        print('save model: {}'.format(save_name))
+        if step % 4 == 0:
+            save_name = os.path.join(cfg.train_output_dir, '{}_{}.h5'.format(cfg.exp_name, imdb.epoch))
+            net_utils.save_net(save_name, net)
+            print('save model: {}'.format(save_name))
+
         step_cnt = 0
 
 imdb.close()

@@ -1,6 +1,6 @@
 gpu_id = '0'
 exp_name = 'darknet19_voc07trainval_exp3'   # save name
-pretrained_fname = 'legacy/darknet19.weights.pretrain.npz'
+pretrained_fname = 'legacy/darknet19.weights.npz'
 
 start_step = 0
 lr_decay_epochs = {60, 90}
