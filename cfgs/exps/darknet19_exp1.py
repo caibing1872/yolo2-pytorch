@@ -1,5 +1,5 @@
 gpu_id = '0'
-exp_name = 'darknet19_voc07trainval_exp3'   # save name
+exp_name = 'darknet19_voc07trainval_default'   # save name
 pretrained_fname = 'legacy/darknet19.weights.npz'
 
 start_step = 0
@@ -10,7 +10,7 @@ max_epoch = 160
 
 weight_decay = 0.0005
 momentum = 0.9
-init_learning_rate = 1e-3
+init_learning_rate = 1e-4
 
 # for training yolo2
 object_scale = 5.
