@@ -111,17 +111,21 @@ for step in range(start_epoch * imdb.batch_per_epoch, cfg.max_epoch * imdb.batch
         bbox_loss, iou_loss, cls_loss = 0., 0., 0.
         cnt = 0
         t.clear()
+        
+        #save_name = os.path.join(cfg.train_output_dir, '{}_{}.h5'.format(cfg.exp_name, step_cnt))
+        #net_utils.save_net(save_name, net)
+        #print('save model: {}'.format(save_name))
+
 
     if step > 0 and (step % imdb.batch_per_epoch == 0):
         if imdb.epoch in cfg.lr_decay_epochs:
             lr *= cfg.lr_decay
             optimizer = torch.optim.SGD(net.parameters(), lr=lr, momentum=cfg.momentum, weight_decay=cfg.weight_decay)
 
-        if step % 4 == 0:
-            save_name = os.path.join(cfg.train_output_dir, '{}_{}.h5'.format(cfg.exp_name, imdb.epoch))
-            net_utils.save_net(save_name, net)
-            print('save model: {}'.format(save_name))
-
-        step_cnt = 0
+	save_name = os.path.join(cfg.train_output_dir, '{}_{}.h5'.format(cfg.exp_name, imdb.epoch))
+      	print('to save model: {}'.format(save_name))
+        net_utils.save_net(save_name, net)
+        
+	step_cnt = 0
 
 imdb.close()
