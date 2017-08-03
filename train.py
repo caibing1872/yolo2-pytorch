@@ -18,6 +18,8 @@ try:
 except ImportError:
     CrayonClient = None
 
+# indicate gpu_id
+os.environ['CUDA_VISIBLE_DEVICES'] = cfg.gpu_id
 
 # data loader
 imdb = VOCDataset(cfg.imdb_train, cfg.DATA_DIR, cfg.train_batch_size,
@@ -41,10 +43,9 @@ optimizer = torch.optim.SGD(net.parameters(), lr=lr, momentum=cfg.momentum, weig
 
 # tensorboad
 use_tensorboard = cfg.use_tensorboard and CrayonClient is not None
-# use_tensorboard = False
 remove_all_log = False
 if use_tensorboard:
-    cc = CrayonClient(hostname='127.0.0.1')
+    cc = CrayonClient(hostname="localhost", port=8889)
     if remove_all_log:
         print('remove all experiments')
         cc.remove_all_experiments()
@@ -86,6 +87,7 @@ for step in range(start_epoch * imdb.batch_per_epoch, cfg.max_epoch * imdb.batch
     optimizer.zero_grad()
     loss.backward()
     optimizer.step()
+
     cnt += 1
     step_cnt += 1
     duration = t.toc()

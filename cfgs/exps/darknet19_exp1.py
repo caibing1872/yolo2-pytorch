@@ -1,6 +1,6 @@
-exp_name = 'darknet19_voc07trainval_exp3'
-
-pretrained_fname = 'darknet19.weights.npz'
+gpu_id = '0'
+exp_name = 'darknet19_voc07trainval_exp3'   # save name
+pretrained_fname = 'legacy/darknet19.weights.pretrain.npz'
 
 start_step = 0
 lr_decay_epochs = {60, 90}
@@ -23,4 +23,4 @@ iou_thresh = 0.6
 imdb_train = 'voc_2007_trainval'
 imdb_test = 'voc_2007_test'
 batch_size = 1
-train_batch_size = 16
+train_batch_size = 30

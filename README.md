@@ -97,3 +97,14 @@ cd faster_rcnn_pytorch
 mkdir output
 python test.py
 ```
+
+### Tensorboard + Crayon
+
+This part is added by [@hli2020](https://github.com/hli2020).
+
+#### To use on local machine
+
++ server: `$ docker run -d -p 8888:8888 -p 8889:8889 --name crayon alband/crayon`;
+to browse the result, access via `localhost:8888`
+
++ client: embed in your code, ``cc = CrayonClient(hostname="localhost", port=8889) ``

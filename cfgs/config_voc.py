@@ -1,6 +1,5 @@
 import numpy as np
 
-
 # trained model
 h5_fname = 'yolo-voc.weights.h5'
 

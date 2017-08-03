@@ -9,7 +9,7 @@ import utils.yolo as yolo_utils
 import utils.network as net_utils
 from utils.timer import Timer
 import cfgs.config as cfg
-
+import matplotlib.pyplot as plt
 
 def preprocess(fname):
     # return fname
@@ -20,15 +20,16 @@ def preprocess(fname):
 
 # hyper-parameters
 # npz_fname = 'models/yolo-voc.weights.npz'
-# h5_fname = 'models/yolo-voc.weights.h5'
-trained_model = cfg.trained_model
+h5_fname = 'legacy/yolo-voc.weights.h5'
+# trained_model = cfg.trained_model
 # trained_model = os.path.join(cfg.train_output_dir, 'darknet19_voc07trainval_exp3_158.h5')
 thresh = 0.5
 im_path = 'demo'
 # ---
 
 net = Darknet19()
-net_utils.load_net(trained_model, net)
+# net_utils.load_net(trained_model, net)
+net_utils.load_net(h5_fname, net)
 # net.load_from_npz(npz_fname)
 # net_utils.save_net(h5_fname, net)
 net.cuda()
@@ -54,18 +55,18 @@ for i, (image, im_data) in enumerate(pool.imap(preprocess, im_fnames, chunksize=
     prob_pred = prob_pred.data.cpu().numpy()
 
     # print bbox_pred.shape, iou_pred.shape, prob_pred.shape
-
     bboxes, scores, cls_inds = yolo_utils.postprocess(bbox_pred, iou_pred, prob_pred, image.shape, cfg, thresh)
-
     im2show = yolo_utils.draw_detection(image, bboxes, scores, cls_inds, cfg)
 
     if im2show.shape[0] > 1100:
         im2show = cv2.resize(im2show, (int(1000. * float(im2show.shape[1]) / im2show.shape[0]), 1000))
-    cv2.imshow('test', im2show)
+    plt.imshow(im2show)
+    plt.show()
+    # cv2.imshow('test', im2show)
 
     total_time = t_total.toc()
     # wait_time = max(int(60 - total_time * 1000), 1)
-    cv2.waitKey(0)
+    # cv2.waitKey(0)
 
     if i % 1 == 0:
         format_str = 'frame: %d, (detection: %.1f Hz, %.1f ms) (total: %.1f Hz, %.1f ms)'
